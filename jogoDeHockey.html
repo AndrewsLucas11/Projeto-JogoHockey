@@ -1,0 +1,201 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Hockey</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            overflow: hidden;
+            
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+<script>
+    var canvasEl = document.querySelector("canvas")
+    var canvasCtx = canvasEl.getContext("2d")
+    var gapX = 10
+
+    const field ={
+            w:window.innerWidth,
+            h:window.innerHeight,
+            draw: function(){
+                //Desenha o campo
+            canvasCtx.fillStyle = ("#286047");
+            canvasCtx.fillRect(0,0,this.w,this.h)
+
+            }
+        }
+
+        
+        const linhaCentral ={
+            x:field.w/2 - 10,
+            w:10,
+            y:0,
+            draw: function(){
+
+                canvasCtx.fillStyle = ("#fff");
+                canvasCtx.fillRect(this.x,this.y,this.w,field.h)
+
+                
+            }
+        } 
+
+        const linhaEsquerda ={
+            x:gapX,
+            y:0,
+            draw: function(){
+
+                canvasCtx.fillStyle = ("#fff");
+                canvasCtx.fillRect(this.x,this.y,gapX,field.h)
+
+                
+            }
+        } 
+        const linhaDireita ={
+            x:field.w - gapX - linhaCentral.w ,
+            y:0,
+            draw: function(){
+
+                canvasCtx.fillStyle = ("#fff");
+                canvasCtx.fillRect(this.x,this.y,gapX,field.h)
+
+                
+            }
+            
+        } 
+        const tacoRight ={
+            x:0,
+            y:0,
+            r1:50,
+            r2:20,
+            draw: function(){
+                canvasCtx.fillStyle = ("#000");
+
+                canvasCtx.beginPath()
+                canvasCtx.arc(this.x,this.y,this.r1,0,2*Math.PI,false)
+                canvasCtx.fill()
+
+                canvasCtx.fillStyle = ("#fff");
+
+                canvasCtx.beginPath()
+                canvasCtx.arc(this.x,this.y,this.r2,0,2*Math.PI,false)
+                canvasCtx.fill()
+            }
+                }
+
+         const tacoleft ={
+            x:field.w - 100,
+            y:200,
+            r1:50,
+            r2:20,
+            draw: function(){
+                canvasCtx.fillStyle = ("#000");
+
+                canvasCtx.beginPath()
+                canvasCtx.arc(this.x,this.y,this.r1,0,2*Math.PI,false)
+                canvasCtx.fill()
+
+                canvasCtx.fillStyle = ("#fff");
+
+                canvasCtx.beginPath()
+                canvasCtx.arc(this.x,this.y,this.r2,0,2*Math.PI,false)
+                canvasCtx.fill()
+            }
+                }
+            const disco = {
+                x:field.w/2,
+                y:field.h/2,
+                r:30,
+                _calcPosition:function(){
+                    
+                },
+                _move: function(){
+
+                },
+
+
+
+                draw: function(){
+                    canvasCtx.fillStyle =("#ff1")
+                    canvasCtx.beginPath()
+                    canvasCtx.arc(this.x,this.y,this.r,0,2*Math.PI,false)
+                    canvasCtx.fill()
+                }
+            } 
+
+            
+            
+            canvasEl.addEventListener("mousemove",function(e){
+            tacoRight.x = e.pageX;
+            tacoRight.y = e.pageY;
+            
+            
+           
+        })
+
+           
+        
+
+
+
+        function setup(){
+            // configurar ,fazendo que o tamanho da tela seja preenchido
+            canvasEl.width = field.w
+            canvasCtx.width = field.w
+            canvasEl.height = field.h
+            canvasCtx.height = field.h
+        }
+
+
+
+        
+
+    
+
+    function draw(){
+        field.draw()
+        linhaCentral.draw()
+        linhaEsquerda.draw()
+        linhaDireita.draw()
+        tacoRight.draw()
+        tacoleft.draw()
+        disco.draw()
+
+    }
+
+    window.animateFrame = (function () {
+        return (
+          window.requestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          window.oRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          function (callback) {
+            return window.setTimeout(callback, 1000 / 60)
+          }
+        )
+      })()
+
+    function main(){
+            animateFrame(main)
+            draw()
+        }
+
+    setup();
+    main();
+
+    
+
+    
+
+
+</script>
+
+
+</body>
+</html>
